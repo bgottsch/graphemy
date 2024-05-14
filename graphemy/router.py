@@ -4,7 +4,7 @@ import sys
 from types import GenericAlias
 
 import strawberry
-from fastapi import Request
+from fastapi import Request, Response
 from graphql.error import GraphQLError
 from graphql.error.graphql_error import format_error as format_graphql_error
 from strawberry.fastapi import GraphQLRouter
@@ -149,8 +149,8 @@ class GraphemyRouter(GraphQLRouter):
                 strawberry.field(hello_world),
             )
 
-        async def get_context(request: Request) -> dict:
-            context = await context_getter(request) if context_getter else {}
+        async def get_context(request: Request, response: Response) -> dict:
+            context = await context_getter(request, response) if context_getter else {}
             for n, f, m in functions:
                 cls = classes_folder[m] if m in classes_folder else None
                 context[n] = MyDataLoader(
