@@ -4,6 +4,11 @@
 </p>
 
 # GRAPHEMY
+
+> **This is a fork of [MDoreto/graphemy](https://github.com/MDoreto/graphemy)** (MIT, by MDoreto), kept in step with
+> its latest release (1.1.2) plus compatibility fixes for newer dependencies — graphql-core 3.3, pydantic 2.14,
+> sqlalchemy 2.1, strawberry ≥ 0.328 (1.2.0). Not published to PyPI: install from a tag, e.g.
+> `graphemy @ git+https://github.com/bgottsch/graphemy@v1.2.0`.
 <p align="center">
     <em>Integrating SQLModel and Strawberry, providing a seamless GraphQL integration with Databases easy and fast.</em>
 </p>
