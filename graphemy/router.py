@@ -7,7 +7,6 @@ import strawberry.utils
 import strawberry.utils.typing
 from fastapi import Request, Response
 from graphql.error import GraphQLError
-from graphql.error.graphql_error import format_error as format_graphql_error
 from sqlalchemy.engine.base import Engine
 from strawberry.fastapi import GraphQLRouter
 from strawberry.http import GraphQLHTTPResponse
@@ -21,6 +20,12 @@ from .schemas.generators import (
     set_schema,
 )
 from .setup import Setup
+
+
+def format_graphql_error(error: GraphQLError) -> dict:
+    """The error as a JSON-serializable dict. graphql-core 3.3 removed format_error; GraphQLError.formatted (3.2+)
+    gives the same."""
+    return error.formatted
 
 
 async def fake_dl(keys: list) -> list:

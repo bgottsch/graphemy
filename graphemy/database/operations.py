@@ -136,7 +136,8 @@ async def get_all(
 
     # Handle offset/limit (pagination); if applied, we also get the total count
     if offset or limit:
-        count_query = select(func.count()).select_from(query)
+        # a Select used as FROM must be a subquery (SQLAlchemy 2.1 requires it; 2.0 accepts it too)
+        count_query = select(func.count()).select_from(query.subquery())
         count = await Setup.execute_query(count_query, model.__enginename__)
         count = count[0]
 

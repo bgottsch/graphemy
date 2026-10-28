@@ -1,5 +1,6 @@
 import re
 
+from pydantic import ConfigDict
 from sqlmodel import SQLModel
 from strawberry.types.base import StrawberryType
 
@@ -32,6 +33,10 @@ class Graphemy(SQLModel):
         __enginename__ (str): The name of the configured engine from Setup's
             engine dict to use for database operations. Defaults to "default".
     """
+
+    # A Dl assignment loses its annotation in __init_subclass__ (it is a loader, not a column): pydantic >= 2.14 rejects
+    # an un-annotated class attribute unless its type is ignored.
+    model_config = ConfigDict(ignored_types=(Dl,))
 
     __strawberry_schema__: StrawberryType = None
     __enable_put_mutation__: bool | None = None

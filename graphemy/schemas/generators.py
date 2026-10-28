@@ -150,8 +150,9 @@ def set_schema(
             name=f"{cls.__name__}Schema",
         )(GraphemySchemaWrapper)
 
-        # Merge both if additional fields were declared in `cls.Strawberry`
-        if extra_schema.__annotations__:
+        # Merge both if additional fields were declared in `cls.Strawberry` — by its fields: newer strawberry
+        # (>= 0.32x) no longer lists a method field (@strawberry.field def …) in __annotations__
+        if extra_schema.__strawberry_definition__.fields:
             strawberry_schema = merge_types(
                 f"{cls.__name__}Schema",
                 (strawberry_schema, extra_schema),
